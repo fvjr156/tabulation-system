@@ -1,0 +1,104 @@
+{   
+  "survey_name": "Customer Satisfaction Survey",
+  "create_date": "2024-04-11",
+  "creator": "Lionraynx_8270",
+    "questions": [
+      {
+        "id": 0,
+        "question": "From a scale of 1 to 5, how would you rate the overall quality of the food served to you?",
+        "question_type": "radio",
+        "radio_count": 5
+      },
+      {
+        "id": 1,
+        "question": "Do you have any feedback or concerns about the taste of the food?",
+        "question_type": "short_answer"
+      },
+      {
+        "id": 2,
+        "question": "Do you have any feedback or concerns about the presentation of the dishes?",
+        "question_type": "short_answer"
+      },
+      {
+        "id": 3,
+        "question": "How satisfied were you with the portion sizes of the dishes?",
+        "question_type": "radio",
+        "radio_count": 5
+      },
+      {
+        "id": 4,
+        "question": "Were there any dishes that stood out to you positively? If yes, please specify.",
+        "question_type": "short_answer"
+      },
+      {
+        "id": 5,
+        "question": "Were there any dishes that you were disappointed with? If yes, please specify.",
+        "question_type": "short_answer"
+      },
+      {
+        "id": 6,
+        "question": "How would you rate the cleanliness of the restaurant's dining area?",
+        "question_type": "radio",
+        "radio_count": 5
+      },
+      {
+        "id": 7,
+        "question": "Do you have any comments or concerns about the restaurant's cleanliness?",
+        "question_type": "short_answer"
+      },
+      {
+        "id": 8,
+        "question": "How would you rate the attentiveness of the restaurant staff?",
+        "question_type": "radio",
+        "radio_count": 5
+      },
+      {
+        "id": 9,
+        "question": "Do you have any feedback or concerns about the service provided by the staff?",
+        "question_type": "short_answer"
+      },
+      {
+        "id": 10,
+        "question": "Did you find the ambiance of the restaurant pleasant?",
+        "question_type": "radio",
+        "radio_count": 5
+      },
+      {
+        "id": 11,
+        "question": "Were there any aspects of the ambiance that you found lacking? If yes, please specify.",
+        "question_type": "short_answer"
+      },
+      {
+        "id": 12,
+        "question": "How likely are you to recommend this restaurant to others?",
+        "question_type": "multiple_choice",
+        "choices": [
+          "---",
+          "Very Likely",
+          "Likely",
+          "Neutral",
+          "Unlikely",
+          "Very Unlikely"
+        ]
+      },
+      {
+        "id": 13,
+        "question": "Would you consider dining at this restaurant again in the future?",
+        "question_type": "multiple_choice",
+        "choices": [
+          "---",
+          "Definitely",
+          "Probably",
+          "Not Sure",
+          "Probably Not",
+          "Definitely Not"
+        ]
+      },
+      {
+        "id": 14,
+        "question": "Do you have any additional comments or suggestions for the restaurant?",
+        "question_type": "short_answer"
+      }
+    ]
+  }
+  

@@ -1,0 +1,33 @@
+{
+    "survey_name": "DEMO Survey",
+    "create_date": "2024-04-11",
+    "creator": "Lionraynx_8270",
+    "questions":[
+        {
+            "id": 0,
+            "question": "question",
+            "question_type": "multiple_choice",
+            "choices": [
+                "---",
+                "Definitely",
+                "Probably",
+                "Not Sure",
+                "Probably Not",
+                "Definitely Not"
+              ]
+        },
+        {
+            "id": 1,
+            "question": "question",
+            "question_type": "multiple_choice",
+            "choices": [
+                "---",
+                "Definitely",
+                "Probably",
+                "Not Sure",
+                "Probably Not",
+                "Definitely Not"
+              ]
+        }
+    ]
+}
