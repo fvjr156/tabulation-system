@@ -7,7 +7,7 @@ import { QuestionBox } from "./QuestionBox";
 
 function FormCreator() {
   useEffect(() => {
-    document.title = "Versatily - Tabulation System";
+    document.title = "Versatily-TSPro Tabulation System";
   }, []);
 
   const [formName, setFormName] = useState("");
@@ -24,7 +24,7 @@ function FormCreator() {
         questionType: "shortAnswer",
         multipleChoices: [""],
         radioBoxCount: 5,
-        image_filename: null
+        image_filename: null,
       },
     ]);
   };
@@ -82,20 +82,48 @@ function FormCreator() {
     );
   };
 
-  const submitFormCreatorData = function () {
+  const submitFormCreatorData = async function () {
     if (!formName || !formAuthor) {
       toast.error("Please enter a survey name and author.");
       return;
+    } else if (formQuestions.length < 1) {
+      toast("Get started by adding a question.");
+      return;
     }
+
     const formCreatorData = {
       form_name: formName,
       form_author: formAuthor,
-      form_content: formQuestions
+      form_content: formQuestions,
     };
-    const JSONdata = (JSON.stringify(formCreatorData));
-    console.log(JSONdata);
+
+    const formData = new FormData();
+    images.forEach((image) => {
+      formData.append("images", image);
+      console.log(image);
+    });
+    const JSONdata = JSON.stringify(formCreatorData);
+    formData.append("form_data", JSONdata);
+
+    console.log(formData.getAll("images")); //File object array
+    console.log(formData.get("form_data")); //string
+
+    try {
+      const result = await POST_uploadSurvey(formData);
+      if (result.success) {
+        toast.success("Form uploaded successfully!");
+        setFormName("");
+        setFormAuthor("");
+        setFormQuestions([]);
+        setImages([]);
+      } else {
+        toast.error(`Error submitting form: ${result.error}`);
+      }
+    } catch (error) {
+      toast.error(`Error submitting form: ${error}`);
+      return;
+    }
   };
-  
 
   return (
     <>
@@ -130,8 +158,7 @@ function FormCreator() {
               onAddImage={handleImageFile}
             />
           ))}
-          <button onClick={submitFormCreatorData
-      }>Submit Survey</button>
+          <button onClick={submitFormCreatorData}>Submit Survey</button>
         </div>
       </div>
       <ToastContainer />

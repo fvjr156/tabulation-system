@@ -18,14 +18,15 @@ const GET_allSurveys = async function () {
 
 const POST_uploadSurvey = async function (formData) {
     try {
-        const response = axios.post(`${api.url}/uploadsurvey`, formData, {
+        await axios.post(`${api.url}/uploadsurvey`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         })
-        return response
+        return {success: true}
     } catch (error) {
-        throw error
+        throw error;
+        //task: handle form upload to backend, if successful, display toast success; if not, display toast error then error message
     }
 }
 
