@@ -105,8 +105,8 @@ function FormCreator() {
     const JSONdata = JSON.stringify(formCreatorData);
     formData.append("form_data", JSONdata);
 
-    console.log(formData.getAll("images")); //File object array
-    console.log(formData.get("form_data")); //string
+    console.log(formData.getAll("images"));
+    console.log(formData.get("form_data"));
 
     try {
       const result = await POST_uploadSurvey(formData);
