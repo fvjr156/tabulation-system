@@ -22,9 +22,7 @@ const TestConnection = async function() {
 
 const SyncDatabase = async function() {
     try{
-        await Judge.sync({alter: true, force: false})
-        await Contestant.sync({alter: true, force: false})
-        await Survey.sync({alter: true, force: false})
+        await MySQLDatabase.sync({alter: true, force: false});
         console.log("Database Model synced!")
     } catch(error) {
         console.error("ERROR: Can\'t sync database models! "+error)
@@ -34,9 +32,7 @@ const SyncDatabase = async function() {
 
 const GET_SyncDatabase = async function(req, res) {
     try{
-        await Judge.sync({alter: true, force: false})
-        await Contestant.sync({alter: true, force: false})
-        await Survey.sync({alter: true, force: false})
+        await MySQLDatabase.sync({alter: true, force: false});
         res.status(200).json({db_status_message: "MySQL Database is working! Sync successful!"})
     } catch(error) {
         res.status(500).json({db_status_message: "ERROR: Can\'t connect to MySQL Database! "+error})

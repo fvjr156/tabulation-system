@@ -7,7 +7,7 @@ function GetDateTime(){
     const mn = String(cd.getMinutes()).padStart(2, '0')
     const sc = String(cd.getSeconds()).padStart(2, '0')
 
-    const DateTime = `${yr}-${mo}-${dy}-${ho}-${mn}-${sc}`
+    const DateTime = `${yr}${mo}${dy}${ho}${mn}${sc}`
     return DateTime
 }
 

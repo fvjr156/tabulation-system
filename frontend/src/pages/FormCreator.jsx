@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./FormCreator.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { POST_uploadSurvey } from "../../api/survey_opers";
+import { POST_uploadImageFiles, POST_uploadSurvey } from "../../api/survey_opers";
 import { QuestionBox } from "./QuestionBox";
 
 function FormCreator() {
@@ -65,7 +65,6 @@ function FormCreator() {
   };
 
   const handleImageFile = function (id, imageData) {
-    console.log(imageData.image_name);
     setImages([...images, imageData.image_file]);
     setFormQuestions((questions) =>
       questions.map((question) =>
@@ -100,24 +99,20 @@ function FormCreator() {
     const formData = new FormData();
     images.forEach((image) => {
       formData.append("images", image);
-      console.log(image);
     });
-    const JSONdata = JSON.stringify(formCreatorData);
-    formData.append("form_data", JSONdata);
 
-    console.log(formData.getAll("images"));
-    console.log(formData.get("form_data"));
-
+    console.log(formQuestions);
     try {
-      const result = await POST_uploadSurvey(formData);
-      if (result.success) {
+      const result = await POST_uploadImageFiles(formData);
+      const result2 = await POST_uploadSurvey(formCreatorData);
+      if (result.success && result2.success) {
         toast.success("Form uploaded successfully!");
         setFormName("");
         setFormAuthor("");
         setFormQuestions([]);
         setImages([]);
       } else {
-        toast.error(`Error submitting form: ${result.error}`);
+        toast.error(`Error submitting form: ${result.error || result2.error}`);
       }
     } catch (error) {
       toast.error(`Error submitting form: ${error}`);
@@ -128,7 +123,7 @@ function FormCreator() {
   return (
     <>
       <div className="survey-creator">
-        <h1>Survey Creator</h1>
+        <h1>Tabulation Form Creator</h1>
         <div className="input-container">
           <label>Survey Name: </label>
           <input

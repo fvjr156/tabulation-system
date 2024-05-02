@@ -85,12 +85,12 @@ export function QuestionBox({
   return (
     <div className="question-box">
       <h2>Question no. {questionNumber}</h2>
-      <label>Question: </label>
-      <input
+      <label>Question: </label><br/>
+      <textarea
         type="text"
         value={questionText}
         onChange={handlequestionTextChange}
-      />
+      /><br/>
       <label>Question Type: </label>
       <select value={questionType} onChange={handleQuestionTypeChange}>
         <option value="shortAnswer">Short Answer</option>
