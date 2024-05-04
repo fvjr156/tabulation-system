@@ -10,13 +10,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "aws-sdk": "^2.1613.0",
     "axios": "^1.6.8",
+    "crypto": "^1.0.1",
+    "mock-aws-s3": "^4.0.2",
+    "nock": "^13.5.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
     "react-toastify": "^10.0.5"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",

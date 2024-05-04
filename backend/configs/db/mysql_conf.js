@@ -1,8 +1,8 @@
 const MySQLConfig = {
     host: "localhost",
     database: "tabulation_system",
-    user: "root",
-    password: "",
+    user: "user_dbadmin",
+    password: "1234",
     dialect: "mysql"
 }
 
