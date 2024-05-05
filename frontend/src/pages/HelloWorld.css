@@ -1,33 +1,39 @@
-.pageplaceholderdiv{
+.helloworld-pageplaceholderdiv{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
   }
 
-  #tooltip{
+  #helloworld_tooltip{
     display: none;
     background-color: #ffffff;
     padding: 10px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
     z-index: 9999;
   }
-  #tooltip::after{
+  #helloworld_tooltip::after{
     content: "You found this hidden content!: Konata Theme Futsuu Ver. from Lucky Star";
   }
-  #extra{
+  #helloworld_extra{
     margin-top: 1000px;
     margin-bottom: 100px;
     display: none;
     flex-direction: column;
     align-items: center;
   }
-  .spinning {
+  .helloworld-spinning {
     animation: spin 5s linear infinite; /* Define animation */
     display: inline-block;
     margin: 6rem;
   }
-  
+  .helloworld-underconst{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
   @keyframes spin {
     0% {
       transform: rotate(0deg); /* Initial rotation */
