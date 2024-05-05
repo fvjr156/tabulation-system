@@ -7,10 +7,12 @@ import { hashPassword } from "../../api/hash";
 import AuthContext from "../../api/context_api/AuthProvider";
 
 function Login() {
-  const { set_auth } = useContext(AuthContext);
+  const { auth, login, logout } = useContext(AuthContext);
+
   useEffect(() => {
     document.title = "TSPro Login Page";
   }, []);
+
   const [username, set_username] = useState("");
   const [password, set_password] = useState("");
   const [showpassword, set_showpassword] = useState(false);
@@ -21,9 +23,7 @@ function Login() {
   const userRef = useRef();
   const errRef = useRef();
 
-  //   useEffect(() => {
-  //     userRef.current.focus();
-  //   }, []);
+  const [token, set_token] = useState(localStorage.getItem("token") || null);
 
   useEffect(() => {
     set_errormsg("");
@@ -47,11 +47,14 @@ function Login() {
           withCredentials: true,
         }
       );
+      const token = response.data.token;
+      login(token);
+
       set_username("");
       set_password("");
       set_success(true);
     } catch (err) {
-      if(username === "" || password === ""){
+      if (username === "" || password === "") {
         set_errormsg("Missing username or password");
         return;
       }
@@ -68,70 +71,98 @@ function Login() {
     }
   };
 
+  axios.interceptors.request.use(
+    (config) => {
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => Promise.reject(error)
+  );
+
+  useEffect(function () {
+    return function () {
+      localStorage.removeItem("token");
+    };
+  }, []);
+
   return (
-    <body className="login-body">
-      <ToastContainer />
-      {success ? (
+    <>
+      {!auth.token ? (
+        <body className="login-body">
+          <ToastContainer />
+          {success ? (
+            <div className="login-main">
+              <h2>You are now logged in.</h2>
+              <p>
+                In production, you'll be redirected to the Tabulation System's
+                homepage.
+                <br />
+                Reload this page now.
+              </p>
+            </div>
+          ) : (
+            <div className="login-main">
+              <div className="login-header">
+                <h2>Log-in to TSPro Tabulation System</h2>
+                <div
+                  style={{
+                    display: errormsg ? "block" : "none",
+                    color: "red",
+                    backgroundColor: "#ffdcdc",
+                    paddingLeft: "10px",
+                    border: "1px solid red",
+                  }}
+                >
+                  <p ref={errRef} aria-live="assertive">
+                    {errormsg}
+                  </p>
+                </div>
+              </div>
+              <div className="login-form-box">
+                <label htmlFor="username">Username: </label>
+                <input
+                  required
+                  type="text"
+                  id="username"
+                  ref={userRef}
+                  autoComplete="off"
+                  value={username}
+                  onChange={(e) => set_username(e.target.value)}
+                />
+                <label htmlFor="password">Password: </label>
+                <input
+                  required
+                  type={showpassword ? "text" : "password"}
+                  id="password"
+                  value={password}
+                  onChange={(e) => set_password(e.target.value)}
+                />
+                <label htmlFor="checkbox">Show Password: </label>
+                <input
+                  type="checkbox"
+                  id="checkbox"
+                  value={showpassword}
+                  onChange={(e) => set_showpassword(!showpassword)}
+                />
+                <div className="login-action-btn-box">
+                  <button onClick={handleSubmit}>Log-in</button>
+                </div>
+              </div>
+            </div>
+          )}
+        </body>
+      ) : (
         <div className="login-main">
           <h2>You are now logged in.</h2>
           <p>
             In production, you'll be redirected to the Tabulation System's
             homepage.
-            <br />
-            Reload this page now.
           </p>
         </div>
-      ) : (
-        <div className="login-main">
-          <div className="login-header">
-            <h2>Log-in to TSPro Tabulation System</h2>
-            <div
-              style={{
-                display: errormsg ? "block" : "none",
-                color: 'red',
-                backgroundColor: '#ffdcdc',
-                paddingLeft: '10px',
-                border: '1px solid red'
-              }}
-            >
-              <p ref={errRef} aria-live="assertive">
-                {errormsg}
-              </p>
-            </div>
-          </div>
-          <div className="login-form-box">
-            <label htmlFor="username">Username: </label>
-            <input
-              required
-              type="text"
-              id="username"
-              ref={userRef}
-              autoComplete="off"
-              value={username}
-              onChange={(e) => set_username(e.target.value)}
-            />
-            <label htmlFor="password">Password: </label>
-            <input
-              required
-              type={showpassword ? "text" : "password"}
-              id="password"
-              value={password}
-              onChange={(e) => set_password(e.target.value)}
-            />
-            <label htmlFor="checkbox">Show Password: </label>
-            <input
-              type="checkbox"
-              id="checkbox"
-              value={showpassword}
-              onChange={(e) => set_showpassword(!showpassword)}
-            />
-            <div className="login-action-btn-box">
-              <button onClick={handleSubmit}>Log-in</button>
-            </div>
-          </div>
-        </div>
       )}
-    </body>
+    </>
   );
 }
 
