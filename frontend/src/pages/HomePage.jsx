@@ -120,33 +120,16 @@ function HomePage() {
         {roleID === 1 && (
           <>
             <p>You are an admin.</p>
-            <p>
-              Your permissions as an admin are to create, modify, and remove
-              users; assign their roles for the system.
-            </p>
           </>
         )}
         {roleID === 2 && (
           <>
             <p>You are a manager.</p>
-            <p>Your permissions as a manager:</p>
-            <ul>
-              <li>Create, modify, and remove Events</li>
-              <li>
-                Create, modify, and remove Contestants and Criteria for each
-                event
-              </li>
-              <li>Manage judge's access of the events</li>
-            </ul>
           </>
         )}
         {roleID === 3 && (
           <>
             <p>You are a judge.</p>
-            <p>
-              Your permissions as a judge are to attend events and answer the
-              event tabulation scoresheets.
-            </p>
           </>
         )}
       </div>
