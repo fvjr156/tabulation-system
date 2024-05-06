@@ -1,15 +1,84 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import * as jose from "jose";
-import Toolbar from "./Toolbar";
 import WarningMessage from "./WarningMessage";
 import "./Main.css";
+import AuthContext from "../../api/context_api/AuthProvider";
 
-const HomePageToolbar = function () {
-  return <div className="home-toolbar"></div>;
+const Toolbar = ({ firstname, lastname, rolename }) => {
+  const { loginerrmsglogout } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  const handleLogout = () => {
+    loginerrmsglogout();
+    navigate("/login");
+  };
+
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
+
+  return (
+    <div className="toolbar">
+      <ul>
+        <li>
+          <a href="/login">Home</a>
+        </li>
+        <li>
+          <a href="/">Test</a>
+        </li>
+        <li>
+          <a href="/helloworld">Test</a>
+        </li>
+        <li>
+          <a href="#" onClick={toggleDropdown}>
+            {firstname ? `${firstname} ${lastname} (${rolename})` : "User"}
+          </a>
+          {dropdownVisible && (
+            <ul className="dropdown-menu">
+              <li>
+                <a href="#">Account</a>
+              </li>
+              <li>
+                <a href="#" onClick={handleLogout}>
+                  Log Out
+                </a>
+              </li>
+            </ul>
+          )}
+        </li>
+      </ul>
+    </div>
+  );
 };
-const HomePageSidebar = function () {
-  return <div className="home-sidebar"></div>;
+
+const Sidebar = function ({ roleID }) {
+  return (
+    <div className="sidebar">
+      <div className="sidebar-logobox">
+        <img
+          src="android-chrome-192x192.png"
+          alt="versatily"
+          className="sidebar-logo"
+        />
+        <span>Versatily-TSPro</span>
+      </div>
+      {roleID === 1 && (
+        <>
+          <p className="sidebar-smalltxt">Admin</p>
+          <div className="sidebar-optionbox">
+            <img src="vite.svg" alt="placeholder" className="sidebar-icon"/>
+            <span>User Management</span>
+          </div>
+          <div className="sidebar-optionbox">
+            <img src="vite.svg" alt="placeholder" className="sidebar-icon"/>
+            <span>User Management</span>
+          </div>
+        </>
+      )}
+    </div>
+  );
 };
 
 function HomePage() {
@@ -41,16 +110,20 @@ function HomePage() {
   return (
     <div className="home-body">
       <WarningMessage />
+      <Sidebar roleID={roleID} />
       <Toolbar
         firstname={userFName}
         lastname={userSurname}
         rolename={roleName}
       />
       <div className="home-main">
-      {roleID === 1 && (
+        {roleID === 1 && (
           <>
             <p>You are an admin.</p>
-            <p>Your permissions as an admin are to create, modify, and remove users; assign their roles for the system.</p>
+            <p>
+              Your permissions as an admin are to create, modify, and remove
+              users; assign their roles for the system.
+            </p>
           </>
         )}
         {roleID === 2 && (
@@ -59,7 +132,10 @@ function HomePage() {
             <p>Your permissions as a manager:</p>
             <ul>
               <li>Create, modify, and remove Events</li>
-              <li>Create, modify, and remove Contestants and Criteria for each event</li>
+              <li>
+                Create, modify, and remove Contestants and Criteria for each
+                event
+              </li>
               <li>Manage judge's access of the events</li>
             </ul>
           </>
@@ -67,7 +143,10 @@ function HomePage() {
         {roleID === 3 && (
           <>
             <p>You are a judge.</p>
-            <p>Your permissions as a judge are to attend events and answer the event tabulation scoresheets.</p>
+            <p>
+              Your permissions as a judge are to attend events and answer the
+              event tabulation scoresheets.
+            </p>
           </>
         )}
       </div>

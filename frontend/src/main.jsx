@@ -7,6 +7,7 @@ import { HelloWorld } from "./pages/HelloWorld.jsx";
 import Login from "./pages/Login.jsx";
 import { AuthProvider } from "../api/context_api/AuthProvider.jsx";
 import HomePage from "./pages/HomePage.jsx";
+import 'react-app-polyfill/stable';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

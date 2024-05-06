@@ -100,7 +100,7 @@ function Login() {
   return (
     <>
       {!auth.token ? (
-        <body className="login-body">
+        <div className="login-body">
           <ToastContainer />
           <div className="login-main">
             <div className="login-header">
@@ -150,7 +150,7 @@ function Login() {
               </div>
             </div>
           </div>
-        </body>
+        </div>
       ) : (
         <div className="login-main">
           <h2>You are now logged in.</h2>
