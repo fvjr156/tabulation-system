@@ -7,5 +7,11 @@
     --blue-green: #0d98ba;
     --light-sea-green: #20b2aa;
     --turquoise: #40e0d0;
+    
     --sa: #ffdcdc;
+    --devs: rgb(34, 109, 249);
+  }
+
+  .home-main{
+    margin: 10px;
   }
