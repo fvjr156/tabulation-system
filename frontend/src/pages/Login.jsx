@@ -7,9 +7,9 @@ import { hashPassword } from "../../api/hash";
 import AuthContext from "../../api/context_api/AuthProvider";
 
 function Login() {
-  const { auth, login, logout } = useContext(AuthContext);
+  const { auth, login, loginerrmsglogout } = useContext(AuthContext);
 
-  useEffect(() => {
+  useEffect(function () {
     document.title = "TSPro Login Page";
   }, []);
 
@@ -18,16 +18,25 @@ function Login() {
   const [showpassword, set_showpassword] = useState(false);
 
   const [errormsg, set_errormsg] = useState("");
-  const [success, set_success] = useState(false);
 
   const userRef = useRef();
   const errRef = useRef();
 
   const [token, set_token] = useState(localStorage.getItem("token") || null);
 
-  useEffect(() => {
-    set_errormsg("");
-  }, [username, password]);
+  useEffect(
+    function () {
+      set_errormsg("");
+    },
+    [username, password]
+  );
+
+  useEffect(function () {
+    const savedToken = window.localStorage.getItem('token');
+    if(savedToken){
+      set_token({savedToken});
+    }
+  },[]);
 
   const handleSubmit = async function (event) {
     event.preventDefault();
@@ -52,7 +61,6 @@ function Login() {
 
       set_username("");
       set_password("");
-      set_success(true);
     } catch (err) {
       if (username === "" || password === "") {
         set_errormsg("Missing username or password");
@@ -72,7 +80,7 @@ function Login() {
   };
 
   axios.interceptors.request.use(
-    (config) => {
+    function (config) {
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -81,28 +89,11 @@ function Login() {
     (error) => Promise.reject(error)
   );
 
-  useEffect(function () {
-    return function () {
-      localStorage.removeItem("token");
-    };
-  }, []);
-
   return (
     <>
       {!auth.token ? (
         <body className="login-body">
           <ToastContainer />
-          {success ? (
-            <div className="login-main">
-              <h2>You are now logged in.</h2>
-              <p>
-                In production, you'll be redirected to the Tabulation System's
-                homepage.
-                <br />
-                Reload this page now.
-              </p>
-            </div>
-          ) : (
             <div className="login-main">
               <div className="login-header">
                 <h2>Log-in to TSPro Tabulation System</h2>
@@ -151,7 +142,6 @@ function Login() {
                 </div>
               </div>
             </div>
-          )}
         </body>
       ) : (
         <div className="login-main">
@@ -160,6 +150,10 @@ function Login() {
             In production, you'll be redirected to the Tabulation System's
             homepage.
           </p>
+            <button onClick={()=>{
+              const logoutmsg = loginerrmsglogout();
+              set_errormsg(logoutmsg);
+            }}>Log out</button>
         </div>
       )}
     </>

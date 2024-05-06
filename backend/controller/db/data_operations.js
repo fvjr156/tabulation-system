@@ -9,7 +9,19 @@ const POST_login = async function (req, res) {
     });
 
     if (user) {
-        const token = jwt.sign({userId: user.id}, process.env.JWT_SECRET_KEY, {expiresIn: '1h'});
+      const token = jwt.sign(
+        {
+          userID: user.UserID,
+          roleID: user.RoleID,
+          username: user.Username,
+          userEmail: user.UserEmail,
+          isVoided: user.isVoided,
+        },
+        process.env.JWT_SECRET_KEY,
+        {
+          expiresIn: "1h",
+        }
+      );
       return res.status(200).json({ message: "Login successful!", token });
     } else {
       return res.status(401).json({ message: "Invalid username or password!" });

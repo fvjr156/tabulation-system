@@ -21,9 +21,14 @@ export const AuthProvider = function ({ children }) {
     localStorage.removeItem("token");
     set_auth({ token: null });
   };
+  const loginerrmsglogout = function () {
+    localStorage.removeItem("token");
+    set_auth({ token: null });
+    return 'Logged out successfully!';
+  };
 
   return (
-    <AuthContext.Provider value={{ auth, login, logout }}>
+    <AuthContext.Provider value={{ auth, login, logout, loginerrmsglogout }}>
       {children}
     </AuthContext.Provider>
   );
