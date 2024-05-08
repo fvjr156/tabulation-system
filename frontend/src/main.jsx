@@ -9,6 +9,7 @@ import { AuthProvider } from "../api/context_api/AuthProvider.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import 'react-app-polyfill/stable';
 import PomodoroTimer from "./pages/PomodoroTimer.jsx";
+import { EventManagement } from "./pages/RoleComponents/EventManagement.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/helloworld" element={<HelloWorld />} />
           <Route path="/home" element={<HomePage/>}/>
           <Route path="/pomodoro" element={<PomodoroTimer/>}/>
+          <Route path="/eventmgmt" element={<EventManagement/>}/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

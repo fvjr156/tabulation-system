@@ -1,15 +1,24 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import * as jose from "jose";
 import WarningMessage from "./WarningMessage";
 import "./Main.css";
 import AuthContext from "../../api/context_api/AuthProvider";
+import { EventManagement } from "./RoleComponents/EventManagement";
+
+const css_var = (varName) => {
+  const styles = getComputedStyle(document.documentElement);
+  const value = styles.getPropertyValue(`--${varName}`).trim();
+
+  return value;
+};
 
 const Toolbar = ({
   firstname,
   lastname,
   rolename,
   onToggleSideBarOpenState,
+  menuref,
 }) => {
   const { loginerrmsglogout } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -25,37 +34,60 @@ const Toolbar = ({
   };
 
   return (
-    <div className="toolbar">
+    <div
+      className="toolbar"
+      style={{
+        backgroundColor:
+          rolename === "Admin"
+            ? css_var("admin-light")
+            : rolename === "Manager"
+            ? css_var("manager-light")
+            : css_var("judge-light"),
+      }}
+    >
       <div>
-        <button
+        <img
+          src="assets/menu.png"
           onClick={() => {
             onToggleSideBarOpenState();
           }}
-        >
-          Open Sidebar
-        </button>
+          style={{
+            width: "30px",
+            height: "30px",
+            marginLeft: "10px",
+          }}
+          ref={menuref}
+        />
       </div>
       <div>
         <ul>
           <li>
             <a href="/login">Home</a>
           </li>
-          <li>
+          {/* <li>
             <a href="/pomodoro">Pomodoro Timer</a>
           </li>
           <li>
             <a href="/helloworld">Test</a>
-          </li>
+          </li> */}
           <li>
             <a href="#" onClick={toggleDropdown}>
               {firstname ? `${firstname} ${lastname} (${rolename})` : "User"}
             </a>
             {dropdownVisible && (
-              <ul className="dropdown-menu">
-                <li>
+              <ul className="dropdown-menu" style={{
+                backgroundColor:
+                  rolename === "Admin"
+                    ? css_var("admin-light")
+                    : rolename === "Manager"
+                    ? css_var("manager-light")
+                    : css_var("judge-light"),
+                    border: "1px solid black"
+              }}>
+                <li className="dropdown-menu-li">
                   <a href="#">Account</a>
                 </li>
-                <li>
+                <li className="dropdown-menu-li">
                   <a href="#" onClick={handleLogout}>
                     Log Out
                   </a>
@@ -69,13 +101,14 @@ const Toolbar = ({
   );
 };
 
-const Sidebar = function ({ roleID, isOpen }) {
+const Sidebar = ({ roleID, isOpen, fRef }) => {
   return (
     <>
       <div
+        ref={fRef}
         id="sidebar"
         className="sidebar"
-        style={{ width: isOpen ? "4%" : "26%" }}
+        style={{ width: isOpen ? "250px" : "60px" }}
       >
         <div className="sidebar-logobox">
           <img
@@ -83,34 +116,72 @@ const Sidebar = function ({ roleID, isOpen }) {
             alt="versatily"
             className="sidebar-logo"
           />
-          <span className="sidebar-iconname">Versatily-TSPro</span>
+          <span
+            className="sidebar-iconname"
+            style={{
+              visibility: isOpen ? "visible" : "hidden",
+            }}
+          >
+            Versatily-TSPro
+          </span>
         </div>
         {roleID === 1 && (
           <>
-            <p id="sidebartext" className="sidebar-smalltxt">
+            <p
+              className="sidebar-smalltxt"
+              style={{ visibility: isOpen ? "visible" : "hidden" }}
+            >
               Admin
             </p>
             <div className="sidebar-optionbox">
-              <img src="vite.svg" alt="placeholder" className="sidebar-icon" />
-              <span>User Management</span>
+              <img
+                src="assets/people.png"
+                alt="placeholder"
+                className="sidebar-icon"
+              />
+              <span style={{ visibility: isOpen ? "visible" : "hidden" }}>
+                User Management
+              </span>
             </div>
           </>
         )}
         {roleID === 2 && (
           <>
-            <p className="sidebar-smalltxt">Manager</p>
+            <p
+              className="sidebar-smalltxt"
+              style={{ visibility: isOpen ? "visible" : "hidden" }}
+            >
+              Manager
+            </p>
             <div className="sidebar-optionbox">
-              <img src="vite.svg" alt="placeholder" className="sidebar-icon" />
-              <span>Event Management</span>
+              <img
+                src="assets/document.png"
+                alt="placeholder"
+                className="sidebar-icon"
+              />
+              <span style={{ visibility: isOpen ? "visible" : "hidden" }}>
+                Event Management
+              </span>
             </div>
           </>
         )}
         {roleID === 3 && (
           <>
-            <p className="sidebar-smalltxt">Judge</p>
+            <p
+              className="sidebar-smalltxt"
+              style={{ visibility: isOpen ? "visible" : "hidden" }}
+            >
+              Judge
+            </p>
             <div className="sidebar-optionbox">
-              <img src="vite.svg" alt="placeholder" className="sidebar-icon" />
-              <span>Event Selection</span>
+              <img
+                src="assets/document.png"
+                alt="placeholder"
+                className="sidebar-icon"
+              />
+              <span style={{ visibility: isOpen ? "visible" : "hidden" }}>
+                Event Selection
+              </span>
             </div>
           </>
         )}
@@ -123,12 +194,39 @@ function HomePage() {
   const [userinfo, set_userinfo] = useState(null);
   const [sidebarOpenState, toggleSidebarOpenState] = useState(false);
   const navigate = useNavigate();
+  const sidebarRef = useRef(null);
+  const menuRef = useRef(null);
+  const [token, setToken] = useState('');
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target) && !menuRef.current.contains(event.target)) {
+        toggleSidebarOpenState(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+  useEffect(() => {
+    const handleSidebarClick = (event) => {
+      if (sidebarRef.current.contains(event.target)) {
+        toggleSidebarOpenState(true);
+      }
+    };
+    document.addEventListener("click", handleSidebarClick);
+    return () => {
+      document.removeEventListener("click", handleSidebarClick);
+    };
+  }, []);
 
   useEffect(function () {
     try {
       const token = localStorage.getItem("token");
       const decode = jose.decodeJwt(token);
       set_userinfo(decode);
+      setToken(token);
     } catch (error) {
       navigate("/login", { state: { errormsg: "You must login first." } });
     }
@@ -154,32 +252,37 @@ function HomePage() {
   return (
     <div className="home-body">
       <WarningMessage />
-      <div className="home-body-container">
-        <Sidebar roleID={roleID} isOpen={sidebarOpenState} />
-        <div className="home-main">
-          <Toolbar
-            firstname={userFName}
-            lastname={userSurname}
-            rolename={roleName}
-            onToggleSideBarOpenState={handle_onToggleSideBarOpenState}
-          />
-          <div className="home-main-content">
-            {roleID === 1 && (
-              <>
-                <p>You are an admin.</p>
-              </>
-            )}
-            {roleID === 2 && (
-              <>
-                <p>You are a manager.</p>
-              </>
-            )}
-            {roleID === 3 && (
-              <>
-                <p>You are a judge.</p>
-              </>
-            )}
-          </div>
+      <Sidebar roleID={roleID} isOpen={sidebarOpenState} fRef={sidebarRef}/>
+      <div
+        className="home-main"
+        style={{
+          marginLeft: sidebarOpenState ? "260px" : "71px",
+          width: sidebarOpenState ? "1090px" : "1276px",
+        }}
+      >
+        <Toolbar
+          firstname={userFName}
+          lastname={userSurname}
+          rolename={roleName}
+          onToggleSideBarOpenState={handle_onToggleSideBarOpenState}
+          menuref={menuRef}
+        />
+        <div className="home-main-content">
+          {roleID === 1 && (
+            <>
+              <p>You are an admin.</p>
+            </>
+          )}
+          {roleID === 2 && (
+            <>
+              <EventManagement role={roleID} user={userID} token={token}/>
+            </>
+          )}
+          {roleID === 3 && (
+            <>
+              <p>You are a judge.</p>
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -187,4 +290,3 @@ function HomePage() {
 }
 
 export default HomePage;
-//todo: now build the homepage, render homepage based on role id

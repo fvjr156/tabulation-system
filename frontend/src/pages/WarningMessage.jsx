@@ -27,7 +27,7 @@ const WarningMessage = () => {
     }, 0);
   }, []);
 
-  return null; // Since it's a console message, we return null to render nothing in the DOM
+  return null;
 };
 
 export default WarningMessage;

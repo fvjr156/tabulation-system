@@ -11,11 +11,11 @@
   --background-white: #f5f5f5;
 
   --manager: #79ac78;
-  --manager-light: #e4eee4;
+  --manager-light: #ddf1dd;
   --admin: #cc704b;
-  --admin-light: #f5e2db;
+  --admin-light: #f1e1da;
   --judge: #4e88b9;
-  --judge-light: #d1daec;
+  --judge-light: #dae1f3;
 
   --button-fg: #d9d9d9;
   --button-bg: #525252;
@@ -42,19 +42,21 @@
   height: 50px;
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: space-between;
   padding: 5px;
-  background-color: white;
+  background-color: var(--background-white);
   color: var(--button-bg);
   border-bottom: 1px solid black;
   border-radius: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 .toolbar ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  text-align: end;
+  text-align: center;
 }
 
 .toolbar ul li {
@@ -68,22 +70,21 @@
 }
 
 .toolbar ul li:hover {
-  background-color: var(--button-fg);
+  background-color: rgba(217, 217, 217, 0.5);
 }
 
 .dropdown-menu {
   position: absolute;
-  top: 100%;
-  right: 15px;
+  top: 60px;
+  right: 0px;
   background-color: white;
   list-style: none;
   height: 100px;
   width: min-content;
-  display: block;
-}
-
-.dropdown-menu li {
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  height: 100px;
 }
 
 .dropdown-menu li a {
@@ -92,38 +93,18 @@
 }
 
 .sidebar {
-  background-color: white;
+  background-color: var(--background-white);
   border-right: 1px solid black;
-  border-radius: 10px;
   padding: 0em 0em 0em 0.6em;
   height: 100%;
-  z-index: 10;
-  position: fixed;
   top: 0;
   left: 0;
+  position: fixed;
   font-size: 1em;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  overflow-x: hidden;
-  transition: 0.5s;
+  overflow: hidden;
+  transition: width 0.5s ease;
   width: 5%;
-}
-
-.sidebar-smalltxt,
-.sidebar-optionbox span,
-.sidebar-iconname {
-  visibility: hidden;
-}
-
-.sidebar:hover .sidebar-smalltxt,
-.sidebar:hover .sidebar-optionbox span,
-.sidebar:hover .sidebar-iconname {
-  visibility: visible;
-}
-
-.sidebar:hover {
-  width: 20%;
+  z-index: 1;
 }
 
 .sidebar-logo {
@@ -139,6 +120,7 @@
 
 .sidebar-smalltxt {
   font-size: 0.9rem;
+  margin: 10px;
 }
 
 .sidebar-logobox {
@@ -154,6 +136,7 @@
 .sidebar-optionbox {
   display: flex;
   align-items: center;
+  height: 66px;
   color: var(--button-bg);
   padding: 0.5em;
 }
@@ -163,7 +146,10 @@
 }
 
 .home-main{
-  width: 100%;
+  width: 1280px;
+  height: 100%;
+  transition: ease;
+  transition-duration: 0.5s;
 }
 .home-main-content{
   margin: 20px;
@@ -294,3 +280,35 @@
     border-color: var(--turquoise);
   }
 }
+
+.home-body{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.evmgmt-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.evmgmt-table th {
+  background-color: var(--manager-light);
+  border: 1px solid var(--manager);
+  padding: 8px;
+  text-align: left;
+}
+
+.evmgmt-table td {
+  border: 1px solid var(--manager);
+  padding: 8px;
+}
+
+.evmgmt-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.evmgmt-table tbody tr:hover {
+  background-color: #dddddd;
+}
+

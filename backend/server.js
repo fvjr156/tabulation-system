@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const dotenvconfig = require('./configs/server/dotenvconfig')
+const dotenvconfig = require("./configs/server/dotenvconfig");
 const bodyParser = require("body-parser");
 const router = require("./routes/routes");
 const {
@@ -17,6 +17,7 @@ app.use(
   })
 );
 app.use(bodyParser.json());
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("model/static"));
 app.use("/", router);
