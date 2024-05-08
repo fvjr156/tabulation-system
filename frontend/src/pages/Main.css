@@ -1,141 +1,296 @@
 :root {
-    --forest-green: #10812e;
-    --chateau-green: #48a860;
-    --jade-green: #00a86b;
-    --emerald-green: #50c878;
-    --cyan-blue: #15a3c7;
-    --blue-green: #0d98ba;
-    --light-sea-green: #20b2aa;
-    --turquoise: #40e0d0;
-    
-    --background-white: #f5f5f5;
+  --forest-green: #10812e;
+  --chateau-green: #48a860;
+  --jade-green: #00a86b;
+  --emerald-green: #50c878;
+  --cyan-blue: #15a3c7;
+  --blue-green: #0d98ba;
+  --light-sea-green: #20b2aa;
+  --turquoise: #40e0d0;
 
-    --manager: #79ac78;
-    --manager-light: #e4eee4;
-    --admin: #cc704b;
-    --admin-light: #f5e2db;
-    --judge: #4e88b9;
-    --judge-light: #d1daec;
+  --background-white: #f5f5f5;
 
-    --button-fg: #d9d9d9;
-    --button-bg: #525252;
+  --manager: #79ac78;
+  --manager-light: #e4eee4;
+  --admin: #cc704b;
+  --admin-light: #f5e2db;
+  --judge: #4e88b9;
+  --judge-light: #d1daec;
 
-    --green-1: #a4e2a6;
-    --green-2: #8decb4;
-    --red-1: #ef9e9a;
-    --red-2: #ff8080;
-    --yellow: #f6e9b2;
-    --blue: #a0dbff;
-    --purple: #ad88c6;
+  --button-fg: #d9d9d9;
+  --button-bg: #525252;
+
+  --green-1: #a4e2a6;
+  --green-2: #8decb4;
+  --red-1: #ef9e9a;
+  --red-2: #ff8080;
+  --yellow: #f6e9b2;
+  --blue: #a0dbff;
+  --purple: #ad88c6;
+}
+
+.home-body {
+  background-color: var(--background-white);
+}
+
+.toolbar {
+  position: sticky;
+  font-size: 1em;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding: 5px;
+  background-color: white;
+  color: var(--button-bg);
+  border-bottom: 1px solid black;
+  border-radius: 10px;
+}
+
+.toolbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: end;
+}
+
+.toolbar ul li {
+  display: inline-block;
+  padding: 10px 20px;
+}
+
+.toolbar ul li a {
+  color: var(--button-bg);
+  text-decoration: none;
+}
+
+.toolbar ul li:hover {
+  background-color: var(--button-fg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 15px;
+  background-color: white;
+  list-style: none;
+  height: 100px;
+  width: min-content;
+  display: block;
+}
+
+.dropdown-menu li {
+  padding: 10px;
+}
+
+.dropdown-menu li a {
+  color: #333;
+  text-decoration: none;
+}
+
+.sidebar {
+  background-color: white;
+  border-right: 1px solid black;
+  border-radius: 10px;
+  padding: 0em 0em 0em 0.6em;
+  height: 100%;
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-size: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  overflow-x: hidden;
+  transition: 0.5s;
+  width: 5%;
+}
+
+.sidebar-smalltxt,
+.sidebar-optionbox span,
+.sidebar-iconname {
+  visibility: hidden;
+}
+
+.sidebar:hover .sidebar-smalltxt,
+.sidebar:hover .sidebar-optionbox span,
+.sidebar:hover .sidebar-iconname {
+  visibility: visible;
+}
+
+.sidebar:hover {
+  width: 20%;
+}
+
+.sidebar-logo {
+  width: 3em;
+  height: 3em;
+}
+
+.sidebar-icon {
+  width: 2em;
+  height: 2em;
+  margin-right: 1em;
+}
+
+.sidebar-smalltxt {
+  font-size: 0.9rem;
+}
+
+.sidebar-logobox {
+  display: flex;
+  align-items: center;
+  color: var(--button-bg);
+  font-weight: 900;
+  font-size: 1em;
+  font-synthesis: weight;
+  height: 65px;
+}
+
+.sidebar-optionbox {
+  display: flex;
+  align-items: center;
+  color: var(--button-bg);
+  padding: 0.5em;
+}
+
+.sidebar-optionbox:hover {
+  background-color: var(--button-fg);
+}
+
+.home-main{
+  width: 100%;
+}
+.home-main-content{
+  margin: 20px;
+}
+
+.sidebar:hover .home-main-content{
+  background-color: red;
+}
+
+.login-body {
+  background-color: #ebebeb;
+  color: black;
+}
+
+.login-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  width: 50vw;
+  height: max-content;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1em;
+  border: 3px solid white;
+  border-radius: 1em;
+  animation: colorchange 5s linear infinite;
+}
+
+.login-errormessage {
+  color: red;
+  background-color: "#ffdcdc";
+  padding-left: 10px;
+  border: 1px solid red;
+}
+
+.login-input {
+  width: 100%;
+  height: 30px;
+  border-radius: 5px;
+  border: 2px solid var(--forest-green);
+  margin-bottom: 10px;
+  cursor: text;
+  font-family: poppins;
+}
+
+.login-input-checkbox {
+  cursor: pointer;
+}
+
+.login-input:hover,
+.login-action-btn-box button:hover {
+  border-color: var(--jade-green);
+}
+
+.login-action-btn-box {
+  margin-top: 10px;
+}
+
+.login-action-btn-box button {
+  width: 200px;
+  border: 2px solid var(--forest-green);
+}
+
+@keyframes colorchange {
+  0% {
+    border-color: var(--forest-green);
   }
 
-  .home-main{
-    margin: 10px;
+  25% {
+    border-color: var(--chateau-green);
   }
 
-  .home-body{
-    background-color: var(--background-white);
+  50% {
+    border-color: var(--jade-green);
   }
 
-  .toolbar {
-    position: sticky;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    padding: 5px;
-    background-color: white;
-    color: var(--button-bg);
-    border-bottom: 1px solid black;
-    border-radius: 10px;
-  }
-  
-  .toolbar ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    text-align: end;
-  }
-  
-  .toolbar ul li {
-    display: inline-block;
-    padding: 10px 20px;
-  }
-  
-  .toolbar ul li a {
-    color: var(--button-bg);
-    text-decoration: none;
-  }
-  
-  .toolbar ul li:hover {
-    background-color: var(--button-fg);
+  75% {
+    border-color: var(--emerald-green);
   }
 
-  .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    right: 15px;
-    background-color: white;
-    list-style: none;
-    height: 100px;
-    width: min-content;
-    display: block;
+  100% {
+    border-color: var(--forest-green);
   }
-  
-  .dropdown-menu li {
-    padding: 10px;
-  }
-  
-  .dropdown-menu li a {
-    color: #333;
-    text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  @keyframes colorchange {
+    0% {
+      border-color: var(--cyan-blue);
+    }
+
+    25% {
+      border-color: var(--blue-green);
+    }
+
+    50% {
+      border-color: var(--light-sea-green);
+    }
+
+    75% {
+      border-color: var(--turquoise);
+    }
+
+    100% {
+      border-color: var(--cyan-blue);
+    }
   }
 
-  .sidebar{
-    background-color: white;
-    border-right: 1px solid black;
-    border-radius: 10px;
-    padding: 0.5em 0em 0em 1.5em;
-    width: 266px;
-    height: 100%;
-    z-index: 10;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  .sidebar-logo{
-    width: 3em;
-    height: 3em;
-  }
-  .sidebar-icon{
-    width: 2em;
-    height: 2em;
-    margin-right: 1em;
+  .login-body {
+    background-color: #181818;
+    color: white;
   }
 
-  .sidebar-smalltxt{
-    font-size: 0.9rem;
-  }
-  
-  .sidebar-logobox{
-    display: flex;
-    align-items: center;
-    color: var(--button-bg);
-    font-weight: 900;
-    font-size: 1.3em;
-    font-synthesis: weight;
-    height: 65px;
+  .login-main {
+    background-color: #252525;
   }
 
-  .sidebar-optionbox{
-    display: flex;
-    align-items: center;
-    color: var(--button-bg);
-    font-size: 1em;
-    padding: 0.5em;
+  .login-input,
+  .login-action-btn-box button {
+    border-color: var(--light-sea-green);
   }
-  .sidebar-optionbox:hover{
-    background-color: var(--button-fg);
+
+  .login-input:hover,
+  .login-action-btn-box button:hover {
+    border-color: var(--turquoise);
   }
+}

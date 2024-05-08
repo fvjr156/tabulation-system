@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./Login.css";
+import "./Main.css";
 import axios from "../../api/axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -43,6 +43,10 @@ function Login() {
 
   useEffect(function () {
     set_errormsg(location.state?.errormsg);
+  }, []);
+
+  useEffect(function () {
+    document.title = "Login to TSPro";
   }, []);
 
   const handleSubmit = async function (event) {
@@ -106,13 +110,8 @@ function Login() {
             <div className="login-header">
               <h2>Log-in to TSPro Tabulation System</h2>
               <div
-                style={{
-                  display: errormsg ? "block" : "none",
-                  color: "red",
-                  backgroundColor: "#ffdcdc",
-                  paddingLeft: "10px",
-                  border: "1px solid red",
-                }}
+                style={{ display: errormsg ? "block" : "none" }}
+                className="login-errormessage"
               >
                 <p ref={errRef} aria-live="assertive">
                   {errormsg}
@@ -122,6 +121,7 @@ function Login() {
             <div className="login-form-box">
               <label htmlFor="username">Username: </label>
               <input
+                className="login-input"
                 required
                 type="text"
                 id="username"
@@ -132,6 +132,7 @@ function Login() {
               />
               <label htmlFor="password">Password: </label>
               <input
+                className="login-input"
                 required
                 type={showpassword ? "text" : "password"}
                 id="password"
@@ -140,6 +141,7 @@ function Login() {
               />
               <label htmlFor="checkbox">Show Password: </label>
               <input
+                className="login-input-checkbox"
                 type="checkbox"
                 id="checkbox"
                 value={showpassword}
@@ -156,21 +158,22 @@ function Login() {
           <h2>You are now logged in.</h2>
           <p>Click to log out of TSPro or go to Home page.</p>
           <div>
-          <button
-            onClick={() => {
-              const logoutmsg = loginerrmsglogout();
-              set_errormsg(logoutmsg);
-            }}
-          >
-            Log out
-          </button>
-          <button
-            onClick={() => {
-              navigate("/home");
-            }} style={{marginLeft: '10px'}}
-          >
-            Go to Home
-          </button>
+            <button
+              onClick={() => {
+                const logoutmsg = loginerrmsglogout();
+                set_errormsg(logoutmsg);
+              }}
+            >
+              Log out
+            </button>
+            <button
+              onClick={() => {
+                navigate("/home");
+              }}
+              style={{ marginLeft: "10px" }}
+            >
+              Go to Home
+            </button>
           </div>
         </div>
       )}
