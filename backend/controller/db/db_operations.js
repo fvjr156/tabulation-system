@@ -21,7 +21,7 @@ const TestConnection = async function () {
 };
 
 const SyncDatabase = async function () {
-  MySQLDatabase.sync({ force: false })
+  MySQLDatabase.sync({ alter: true, force: false })
     .then(() => {
       console.log("Database model synced.");
     })
@@ -31,7 +31,7 @@ const SyncDatabase = async function () {
 };
 
 const GET_SyncDatabase = async function (req, res) {
-  MySQLDatabase.sync({ force: false })
+  MySQLDatabase.sync({ alter: true, force: false })
     .then(() => {
       res.status(200).json({
         db_status_message: "MySQL Database is working! Sync successful!",

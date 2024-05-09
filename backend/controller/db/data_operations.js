@@ -73,20 +73,20 @@ const POST_events = async function (req, res) {
         attributes: ["EventID"],
       });
       const eventIds = judgeEventAccess.map((access) => access.EventID);
-      const events = await tblEvent.findAll({
+      const judge_events = await tblEvent.findAll({
         where: { EventID: eventIds },
       });
+      const events = JSON.stringify(judge_events);
       return res.status(200).json(events);
     }
     if (role_id === 2) {
       const allEvents = await tblEvent.findAll();
       const events = JSON.stringify(allEvents);
-      console.log(events);
       return res.status(200).json(events);
     }
   } catch (error) {
     console.error("Error retrieving events:", error);
-    return res.status(500).json({ error: "Internal server error" });
+    return;
   }
 };
 

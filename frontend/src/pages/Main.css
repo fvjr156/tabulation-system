@@ -312,3 +312,11 @@
   background-color: #dddddd;
 }
 
+.evmgmt-btn-create{
+  background-color: var(--manager); 
+  color: white;
+}
+.evmgmt-btn-create:hover{
+  background-color: #619960; 
+  color: white;
+}

@@ -5,8 +5,9 @@ import WarningMessage from "./WarningMessage";
 import "./Main.css";
 import AuthContext from "../../api/context_api/AuthProvider";
 import { EventManagement } from "./RoleComponents/EventManagement";
+import { EventSelection } from "./RoleComponents/EventSelection";
 
-const css_var = (varName) => {
+export const css_var = (varName) => {
   const styles = getComputedStyle(document.documentElement);
   const value = styles.getPropertyValue(`--${varName}`).trim();
 
@@ -75,15 +76,18 @@ const Toolbar = ({
               {firstname ? `${firstname} ${lastname} (${rolename})` : "User"}
             </a>
             {dropdownVisible && (
-              <ul className="dropdown-menu" style={{
-                backgroundColor:
-                  rolename === "Admin"
-                    ? css_var("admin-light")
-                    : rolename === "Manager"
-                    ? css_var("manager-light")
-                    : css_var("judge-light"),
-                    border: "1px solid black"
-              }}>
+              <ul
+                className="dropdown-menu"
+                style={{
+                  backgroundColor:
+                    rolename === "Admin"
+                      ? css_var("admin-light")
+                      : rolename === "Manager"
+                      ? css_var("manager-light")
+                      : css_var("judge-light"),
+                  border: "1px solid black",
+                }}
+              >
                 <li className="dropdown-menu-li">
                   <a href="#">Account</a>
                 </li>
@@ -196,11 +200,15 @@ function HomePage() {
   const navigate = useNavigate();
   const sidebarRef = useRef(null);
   const menuRef = useRef(null);
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState("");
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (sidebarRef.current && !sidebarRef.current.contains(event.target) && !menuRef.current.contains(event.target)) {
+      if (
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target) &&
+        !menuRef.current.contains(event.target)
+      ) {
         toggleSidebarOpenState(false);
       }
     };
@@ -252,7 +260,7 @@ function HomePage() {
   return (
     <div className="home-body">
       <WarningMessage />
-      <Sidebar roleID={roleID} isOpen={sidebarOpenState} fRef={sidebarRef}/>
+      <Sidebar roleID={roleID} isOpen={sidebarOpenState} fRef={sidebarRef} />
       <div
         className="home-main"
         style={{
@@ -275,12 +283,12 @@ function HomePage() {
           )}
           {roleID === 2 && (
             <>
-              <EventManagement role={roleID} user={userID} token={token}/>
+              <EventManagement role={roleID} user={userID} token={token} />
             </>
           )}
           {roleID === 3 && (
             <>
-              <p>You are a judge.</p>
+              <EventSelection role={roleID} user={userID} token={token} />
             </>
           )}
         </div>

@@ -7,8 +7,13 @@ const MySQLDatabase = new Sequelize(
     database_conf.password,
     {
         host: database_conf.host,
-        dialect: database_conf.dialect
+        dialect: database_conf.dialect,
+        define: {
+            freezeTableName: true,
+            timestamps: false,
+          },
     }
+    
 )
 
 module.exports = MySQLDatabase

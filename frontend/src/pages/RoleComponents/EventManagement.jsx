@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../../api/axios";
 import "../Main.css";
+import { css_var } from "../HomePage";
 
 export const EventManagement = function ({ role, user, token }) {
-  const [events, setEvents] = useState(null);
+  const [events, setEvents] = useState([]);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -33,25 +34,35 @@ export const EventManagement = function ({ role, user, token }) {
 
   return (
     <div className="App">
-      <p>Event Mgmt. Module for Managers</p>
       <h1>Event Management</h1>
+      <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginTop: '-45px'}}>
+        <p>
+          Click an Event to view or modify, including its contestants and
+          criteria.
+        </p>
+        <button className="evmgmt-btn-create">Create Event</button>
+      </div>
+      <br/>
       <table className="evmgmt-table">
         <thead>
           <tr>
-            <th>Event ID</th>
             <th>Event Name</th>
-            <th>Event Description</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Venue</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          {events &&
-            events.map((event) => (
-              <tr key={event.EventID}>
-                <td>{event.EventID}</td>
-                <td>{event.EventName}</td>
-                <td>{event.EventDescription}</td>
-              </tr>
-            ))}
+          {events.map((event) => (
+            <tr key={event.EventID}>
+              <td>{event.EventName}</td>
+              <td>{event.EventDescription}</td>
+              <td>{event.EventDate}</td>
+              <td>{event.EventVenue}</td>
+              <td>{event.EventStatus}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
