@@ -1,145 +1,145 @@
 const { DataTypes } = require("sequelize");
-const MySQLDatabase = require("../../configs/db/database_conf");
+const MyDatabase = require("../../configs/db/database_conf");
 
-const tblRoles = MySQLDatabase.define("tblRoles", {
-  RoleID: {
+const tblroles = MyDatabase.define("tblroles", {
+  roleid: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  RoleName: {
+  rolename: {
     type: DataTypes.STRING(64),
-    defaultValue: "NONE",
+    defaultValue: "none",
   },
 });
 
-const tblUsers = MySQLDatabase.define("tblUsers", {
-  UserID: {
+const tblusers = MyDatabase.define("tblusers", {
+  userid: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  RoleID: {
+  roleid: {
     type: DataTypes.INTEGER,
     references: {
-      model: "tblRoles",
-      key: "RoleID",
+      model: "tblroles",
+      key: "roleid",
     },
   },
-  UserPassword: {
+  userpassword: {
     type: DataTypes.STRING(512),
   },
-  UserFirstName: {
+  userfirstname: {
     type: DataTypes.STRING(64),
-    defaultValue: "Anon",
+    defaultValue: "anon",
   },
-  UserSurname: {
+  usersurname: {
     type: DataTypes.STRING(64),
-    defaultValue: "dela Cruz",
+    defaultValue: "dela cruz",
   },
-  Username: {
+  username: {
     type: DataTypes.STRING(64),
   },
-  UserEmail: {
+  useremail: {
     type: DataTypes.STRING(64),
-    defaultValue: "NONE",
+    defaultValue: "none",
   },
-  isVoided: {
+  isvoided: {
     type: DataTypes.BOOLEAN,
   },
 });
 
-const tblEvent = MySQLDatabase.define("tblEvent", {
-  EventID: {
+const tblevent = MyDatabase.define("tblevent", {
+  eventid: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  EventName: {
+  eventname: {
     type: DataTypes.STRING(64),
   },
-  EventDescription: {
+  eventdescription: {
     type: DataTypes.STRING(512),
   },
-  EventDate: {
+  eventdate: {
     type: DataTypes.DATE,
   },
-  EventVenue: {
+  eventvenue: {
     type: DataTypes.STRING(128),
   },
-  EventStatus: {
-    type: DataTypes.ENUM("Scheduled", "Ongoing", "Completed"),
-    defaultValue: "Scheduled",
+  eventstatus: {
+    type: DataTypes.ENUM("scheduled", "ongoing", "completed"),
+    defaultValue: "scheduled",
   },
 });
 
-const tblContestants = MySQLDatabase.define("tblContestants", {
-  ContestantID: {
+const tblcontestants = MyDatabase.define("tblcontestants", {
+  contestantid: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  ContestantName: {
+  contestantname: {
     type: DataTypes.STRING(64),
   },
-  EventID: {
+  eventid: {
     type: DataTypes.INTEGER,
     references: {
-      model: "tblEvent",
-      key: "EventID",
+      model: "tblevent",
+      key: "eventid",
     },
   },
 });
 
-const tblCriteria = MySQLDatabase.define("tblCriteria", {
-  CriterionID: {
+const tblcriteria = MyDatabase.define("tblcriteria", {
+  criterionid: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  EventID: {
+  eventid: {
     type: DataTypes.INTEGER,
     references: {
-      model: "tblEvent",
-      key: "EventID",
+      model: "tblevent",
+      key: "eventid",
     },
   },
-  Criterion: {
+  criterion: {
     type: DataTypes.STRING(512),
   },
-  CriterionWeight: {
+  criterionweight: {
     type: DataTypes.FLOAT,
   },
 });
 
-const tblJudgesEventAccess = MySQLDatabase.define("tblJudgesEventAccess", {
-  UserID: {
+const tbljudgeseventaccess = MyDatabase.define("tbljudgeseventaccess", {
+  userid: {
     type: DataTypes.INTEGER,
     references: {
-      model: "tblUsers",
-      key: "UserID",
+      model: "tblusers",
+      key: "userid",
     },
   },
-  EventID: {
+  eventid: {
     type: DataTypes.INTEGER,
     references: {
-      model: "tblEvent",
-      key: "EventID",
+      model: "tblevent",
+      key: "eventid",
     },
   },
 });
 
-tblUsers.belongsTo(tblRoles, { foreignKey: "RoleID" });
-tblContestants.belongsTo(tblEvent, { foreignKey: "EventID" });
-tblCriteria.belongsTo(tblEvent, { foreignKey: "EventID" });
-tblJudgesEventAccess.belongsTo(tblUsers, { foreignKey: "UserID" });
-tblJudgesEventAccess.belongsTo(tblEvent, { foreignKey: "EventID" });
+tblusers.belongsTo(tblroles, { foreignKey: "roleid" });
+tblcontestants.belongsTo(tblevent, { foreignKey: "eventid" });
+tblcriteria.belongsTo(tblevent, { foreignKey: "eventid" });
+tbljudgeseventaccess.belongsTo(tblusers, { foreignKey: "userid" });
+tbljudgeseventaccess.belongsTo(tblevent, { foreignKey: "eventid" });
 
 module.exports = {
-  tblUsers,
-  tblRoles,
-  tblEvent,
-  tblContestants,
-  tblCriteria,
-  tblJudgesEventAccess,
+  tblusers,
+  tblroles,
+  tblevent,
+  tblcontestants,
+  tblcriteria,
+  tbljudgeseventaccess,
 };

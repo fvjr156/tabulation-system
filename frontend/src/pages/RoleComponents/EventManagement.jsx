@@ -55,12 +55,12 @@ export const EventManagement = function ({ role, user, token }) {
         </thead>
         <tbody>
           {events.map((event) => (
-            <tr key={event.EventID}>
-              <td>{event.EventName}</td>
-              <td>{event.EventDescription}</td>
-              <td>{event.EventDate}</td>
-              <td>{event.EventVenue}</td>
-              <td>{event.EventStatus}</td>
+            <tr key={event.eventiD}>
+              <td>{event.eventname}</td>
+              <td>{event.eventdescription}</td>
+              <td>{event.eventdate}</td>
+              <td>{event.eventvenue}</td>
+              <td>{event.eventstatus}</td>
             </tr>
           ))}
         </tbody>

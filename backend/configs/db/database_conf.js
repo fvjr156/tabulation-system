@@ -1,7 +1,8 @@
 const {Sequelize} = require('sequelize')
-const database_conf = require('./mysql_conf')
+// const database_conf = require('./mysql_conf')
+const database_conf = require('./postgres_conf')
 
-const MySQLDatabase = new Sequelize(
+const MyDatabase = new Sequelize(
     database_conf.database,
     database_conf.user,
     database_conf.password,
@@ -16,4 +17,4 @@ const MySQLDatabase = new Sequelize(
     
 )
 
-module.exports = MySQLDatabase
+module.exports = MyDatabase

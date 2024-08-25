@@ -1,33 +1,33 @@
 const dotenvconfig = require("../../configs/server/dotenvconfig");
 const {
-  tblUsers,
-  tblRoles,
-  tblEvent,
-  tblJudgesEventAccess,
+  tblusers,
+  tblroles,
+  tblevent,
+  tbljudgeseventaccess,
 } = require("../../model/db/db_tabulation_system");
 const jwt = require("jsonwebtoken");
 
 const POST_login = async function (req, res) {
   const { username, password } = req.body;
   try {
-    const user = await tblUsers.findOne({
-      where: { Username: username, UserPassword: password },
+    const user = await tblusers.findOne({
+      where: { username: username, userpassword: password },
     });
 
     if (user) {
-      const role = await tblRoles.findOne({
-        where: { RoleID: user.RoleID },
+      const role = await tblroles.findOne({
+        where: { roleid: user.roleid },
       });
       const token = jwt.sign(
         {
-          userID: user.UserID,
-          userFName: user.UserFirstName,
-          userSurname: user.UserSurname,
-          roleID: user.RoleID,
-          roleName: role.RoleName,
-          username: user.Username,
-          userEmail: user.UserEmail,
-          isVoided: user.isVoided,
+          userid: user.userid,
+          userFName: user.userfirstname,
+          userSurname: user.usersurname,
+          roleid: user.roleid,
+          roleName: role.rolename,
+          username: user.username,
+          userEmail: user.useremail,
+          isVoided: user.isvoided,
         },
         dotenvconfig.jwtSecret,
         {
@@ -47,7 +47,7 @@ const POST_login = async function (req, res) {
 const POST_events = async function (req, res) {
   try {
     const token = req.headers["authorization"];
-    console.log(token)
+    console.log(token);
     if (!token) {
       return res.status(401).json({
         message: "Unauthorized: You're not authorized to access this resource",
@@ -59,7 +59,7 @@ const POST_events = async function (req, res) {
       }
     });
 
-    const {role_id, user_id} = req.body;
+    const { role_id, user_id } = req.body;
     console.log(role_id);
     if (!role_id) {
       return res
@@ -68,19 +68,19 @@ const POST_events = async function (req, res) {
     }
 
     if (role_id === 3) {
-      const judgeEventAccess = await tblJudgesEventAccess.findAll({
-        where: { UserID: user_id },
-        attributes: ["EventID"],
+      const judgeEventAccess = await tbljudgeseventaccess.findAll({
+        where: { userid: user_id },
+        attributes: ["eventid"],
       });
-      const eventIds = judgeEventAccess.map((access) => access.EventID);
-      const judge_events = await tblEvent.findAll({
-        where: { EventID: eventIds },
+      const eventIds = judgeEventAccess.map((access) => access.eventid);
+      const judge_events = await tblevent.findAll({
+        where: { eventid: eventIds },
       });
       const events = JSON.stringify(judge_events);
       return res.status(200).json(events);
     }
     if (role_id === 2) {
-      const allEvents = await tblEvent.findAll();
+      const allEvents = await tblevent.findAll();
       const events = JSON.stringify(allEvents);
       return res.status(200).json(events);
     }

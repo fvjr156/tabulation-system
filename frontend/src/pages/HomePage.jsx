@@ -6,6 +6,7 @@ import "./Main.css";
 import AuthContext from "../../api/context_api/AuthProvider";
 import { EventManagement } from "./RoleComponents/EventManagement";
 import { EventSelection } from "./RoleComponents/EventSelection";
+import { UserManagement } from "./RoleComponents/UserManagement";
 
 export const css_var = (varName) => {
   const styles = getComputedStyle(document.documentElement);
@@ -133,7 +134,7 @@ const Sidebar = ({ roleID, isOpen, fRef }) => {
           <>
             <p
               className="sidebar-smalltxt"
-              style={{ visibility: isOpen ? "visible" : "hidden" }}
+              style={{ visibility: isOpen ? "visible" : "hidden", color: "black" }}
             >
               Admin
             </p>
@@ -153,7 +154,7 @@ const Sidebar = ({ roleID, isOpen, fRef }) => {
           <>
             <p
               className="sidebar-smalltxt"
-              style={{ visibility: isOpen ? "visible" : "hidden" }}
+              style={{ visibility: isOpen ? "visible" : "hidden", color: "black" }}
             >
               Manager
             </p>
@@ -173,7 +174,7 @@ const Sidebar = ({ roleID, isOpen, fRef }) => {
           <>
             <p
               className="sidebar-smalltxt"
-              style={{ visibility: isOpen ? "visible" : "hidden" }}
+              style={{ visibility: isOpen ? "visible" : "hidden", color: "black" }}
             >
               Judge
             </p>
@@ -217,6 +218,7 @@ function HomePage() {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
   useEffect(() => {
     const handleSidebarClick = (event) => {
       if (sidebarRef.current.contains(event.target)) {
@@ -245,22 +247,23 @@ function HomePage() {
   };
 
   const {
+    userid,
     userFName,
     userSurname,
     roleName,
-    userID,
-    roleID,
+    roleid,
     username,
     userEmail,
     isVoided,
     iat,
     exp,
   } = userinfo || {};
+  console.log(userinfo);
 
   return (
     <div className="home-body">
       <WarningMessage />
-      <Sidebar roleID={roleID} isOpen={sidebarOpenState} fRef={sidebarRef} />
+      <Sidebar roleID={roleid} isOpen={sidebarOpenState} fRef={sidebarRef} />
       <div
         className="home-main"
         style={{
@@ -275,20 +278,20 @@ function HomePage() {
           onToggleSideBarOpenState={handle_onToggleSideBarOpenState}
           menuref={menuRef}
         />
-        <div className="home-main-content">
-          {roleID === 1 && (
+        <div className="home-main-content" style={{ color: 'black' }}>
+          {roleid === 1 && (
             <>
-              <p>You are an admin.</p>
+              <UserManagement />
             </>
           )}
-          {roleID === 2 && (
+          {roleid === 2 && (
             <>
-              <EventManagement role={roleID} user={userID} token={token} />
+              <EventManagement role={roleid} user={userid} token={token} />
             </>
           )}
-          {roleID === 3 && (
+          {roleid === 3 && (
             <>
-              <EventSelection role={roleID} user={userID} token={token} />
+              <EventSelection role={roleid} user={userid} token={token} />
             </>
           )}
         </div>
@@ -296,5 +299,6 @@ function HomePage() {
     </div>
   );
 }
+
 
 export default HomePage;
