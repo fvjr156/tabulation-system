@@ -22,7 +22,7 @@ const tblusers = MyDatabase.define("tblusers", {
   roleid: {
     type: DataTypes.INTEGER,
     references: {
-      model: "tblroles",
+      model: tblroles,
       key: "roleid",
     },
   },
@@ -68,7 +68,7 @@ const tblevent = MyDatabase.define("tblevent", {
     type: DataTypes.STRING(128),
   },
   eventstatus: {
-    type: DataTypes.ENUM("scheduled", "ongoing", "completed"),
+    type: DataTypes.STRING,  // Changed from ENUM to STRING
     defaultValue: "scheduled",
   },
 });
@@ -85,7 +85,7 @@ const tblcontestants = MyDatabase.define("tblcontestants", {
   eventid: {
     type: DataTypes.INTEGER,
     references: {
-      model: "tblevent",
+      model: tblevent,
       key: "eventid",
     },
   },
@@ -100,7 +100,7 @@ const tblcriteria = MyDatabase.define("tblcriteria", {
   eventid: {
     type: DataTypes.INTEGER,
     references: {
-      model: "tblevent",
+      model: tblevent,
       key: "eventid",
     },
   },
@@ -116,14 +116,14 @@ const tbljudgeseventaccess = MyDatabase.define("tbljudgeseventaccess", {
   userid: {
     type: DataTypes.INTEGER,
     references: {
-      model: "tblusers",
+      model: tblusers,
       key: "userid",
     },
   },
   eventid: {
     type: DataTypes.INTEGER,
     references: {
-      model: "tblevent",
+      model: tblevent,
       key: "eventid",
     },
   },

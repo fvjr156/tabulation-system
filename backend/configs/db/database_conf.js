@@ -1,20 +1,12 @@
-const {Sequelize} = require('sequelize')
-// const database_conf = require('./mysql_conf')
-const database_conf = require('./postgres_conf')
+const { Sequelize, DataTypes } = require('sequelize');
+const path = require('path');
 
-const MyDatabase = new Sequelize(
-    database_conf.database,
-    database_conf.user,
-    database_conf.password,
-    {
-        host: database_conf.host,
-        dialect: database_conf.dialect,
-        define: {
-            freezeTableName: true,
-            timestamps: false,
-          },
+const sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: path.resolve(__dirname, 'database.sqlite3'),
+    define: {
+        timestamps: false // Disable timestamps globally
     }
-    
-)
+});
 
-module.exports = MyDatabase
+module.exports = sequelize;

@@ -26,7 +26,7 @@ const SyncDatabase = async function () {
       console.log("Database model synced.");
     })
     .catch((err) => {
-      console.error("Unable to sync database: ", error);
+      console.error("Unable to sync database: ", err);
     });
 };
 
